@@ -1,7 +1,33 @@
 __pycache__/
 .pytest_cache/
 .venv/
-.storage/
 *.pyc
+
+# Local Home Assistant config, backups and runtime state.
+/config/
+/backups/
+.storage/
+data/private/
+secrets.yaml
+secrets.yml
 *.log
+*.db
+*.db-shm
+*.db-wal
+*.sqlite*
+*.tar
+*.tar.gz
+*.zip
+
+# Local authentication material.
 .env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+tesla_tokens.json
+mqtt.json
+token_passphrase

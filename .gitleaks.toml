@@ -1,0 +1,13 @@
+[extend]
+useDefault = true
+
+[[rules]]
+id = "tesla-ha-credential-literal"
+description = "Hardcoded Tesla or Home Assistant credential"
+regex = '''(?i)(?:^|[^a-z0-9_])["']?(?:access_token|refresh_token|client_secret|password|token_passphrase|mqtt_password)["']?\s*[:=]\s*["']([^"'\s]{12,})["']'''
+secretGroup = 1
+
+[[rules]]
+id = "private-home-automation-file"
+description = "Runtime credential file or private Home Assistant data"
+path = '''(?i)(?:^|/)(?:\.storage/|data/private/|secrets\.ya?ml$|tesla_tokens\.json$|mqtt\.json$|token_passphrase$|\.env(?:\.[^/]+)?$|[^/]+\.(?:pem|key|p12|pfx)$)'''
