@@ -1,6 +1,6 @@
 # Tesla Order Tracker for Home Assistant
 
-A community integration that adds a Tesla order page to the Home Assistant sidebar. Version 0.1.0 is a test build. The demo is ready to try. Live tracking through Tesla Fleet is experimental.
+A community integration that adds a Tesla order page to the Home Assistant sidebar. Version 0.1.1 adds a test path for local Tesla sign-in. The demo remains available.
 
 ## Try it in Home Assistant 2026.11 or newer
 
@@ -11,7 +11,11 @@ A community integration that adds a Tesla order page to the Home Assistant sideb
 
 If the button does not open the repository, use **Settings → Marketplace → Add from link** with this repository's URL and select **Integration**. The Marketplace installs the current default branch while this project is in early testing.
 
-## Connect a real order (experimental)
+## Connect a real order locally (test build)
+
+Open **Sign in with Tesla (paste callback address)** in the setup. Sign in on Tesla's website, then paste the one-time callback address into Home Assistant. See the [local sign-in guide](docs/local-sign-in.md) for the browser steps. This route uses Tesla's order list, and the live test is pending.
+
+## Optional Tesla Fleet API connection
 
 This option requires your own Tesla Developer application registered for your region. Start with the [Tesla Fleet API onboarding guide](https://developer.tesla.com/docs/fleet-api/getting-started/what-is-fleet-api) and [Home Assistant's Tesla Fleet application setup](https://www.home-assistant.io/integrations/tesla_fleet/#setting-up-the-developer-application). Set the allowed redirect URI to `https://my.home-assistant.io/redirect/oauth` if using the default My Home Assistant integration. In Home Assistant, add your Client ID and Client Secret as **Application credentials** for **Tesla Order Tracker**. Then add the integration, choose **Connect Tesla Fleet**, select your region, and sign in on Tesla's site. If more than one active order is returned, select the order to track. This reader does not send any vehicle commands or require vehicle key pairing for its own order requests. Tesla may require developer app registration and apply charges under its API terms.
 

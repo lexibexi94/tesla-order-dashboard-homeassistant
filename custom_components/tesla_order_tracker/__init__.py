@@ -14,6 +14,7 @@ from homeassistant.helpers import config_entry_oauth2_flow
 
 from .const import DOMAIN, PANEL
 from .coordinator import TrackerCoordinator
+from .local_auth import LOCAL_IMPLEMENTATION, LocalAuth
 
 PLATFORMS = (Platform.SENSOR, Platform.BUTTON)
 
@@ -24,7 +25,15 @@ async def async_setup(hass, config):
         StaticPathConfig(f"/{PANEL}-assets/panel.js", str(Path(__file__).parent / "panel.js"), False)
     ])
     hass.data[DOMAIN] = set()
+    config_entry_oauth2_flow.async_add_implementation_provider(
+        hass, LOCAL_IMPLEMENTATION, async_provide_local_auth
+    )
     return True
+
+
+async def async_provide_local_auth(hass, domain):
+    """Register local OAuth renewal for tracker entries only."""
+    return [LocalAuth(hass)] if domain == DOMAIN else []
 
 
 async def async_setup_entry(hass, entry):

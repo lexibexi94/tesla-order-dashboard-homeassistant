@@ -10,4 +10,4 @@ Du brauchst Home Assistant ab 2026.11 und ein Administratorkonto.
 
 Du kannst den Tracker auch über **Einstellungen → Marketplace → Über Link hinzufügen** und die [Repository-Adresse](https://github.com/lexibexi94/tesla-order-dashboard-homeassistant) hinzufügen.
 
-Für echte Bestellungen gibt es einen experimentellen Zugang. Dafür ist eine eigens registrierte Tesla-Entwickleranwendung mit Anmeldedaten in Home Assistant erforderlich. Einzelheiten stehen in der [Projektbeschreibung](../README.md#connect-a-real-order-experimental).
+Für echte Bestellungen wähle **Mit Tesla anmelden (Rücksprungadresse einfügen)**. Die Anleitung im Dialog zeigt dir, wie du dich am Computer bei Tesla anmeldest und die einmalige Rücksprungadresse direkt in Home Assistant einfügst. Dieser Weg ist noch im Test.

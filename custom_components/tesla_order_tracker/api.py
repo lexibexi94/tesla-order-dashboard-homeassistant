@@ -4,7 +4,7 @@ import re
 from aiohttp import ClientError, ClientTimeout, hdrs
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import REGIONS
+from .const import OWNER_HOST, REGIONS
 
 PUBLIC_KEYS = {
     "model": ("modelCode", "model"),
@@ -56,7 +56,7 @@ def project(order):
 
 async def read_orders(hass, token, host):
     """Use fixed TLS origins and never forward Authorization on redirect."""
-    if host not in REGIONS.values():
+    if host != OWNER_HOST and host not in REGIONS.values():
         raise FleetError("invalid_response")
     session = async_get_clientsession(hass)
     try:

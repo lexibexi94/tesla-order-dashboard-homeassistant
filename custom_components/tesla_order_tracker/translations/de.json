@@ -3,10 +3,11 @@
     "step": {
       "user": {
         "title": "Tesla Order Tracker",
-        "description": "Probiere eine Beispielbestellung aus oder verbinde eine registrierte Tesla-Fleet-Anwendung.",
+        "description": "Melde dich bei Tesla an oder probiere eine Beispielbestellung aus.",
         "menu_options": {
           "demo": "Demo ausprobieren",
-          "fleet": "Tesla Fleet verbinden (experimentell)"
+          "fleet": "Erweitert: eigene Tesla-Entwickleranwendung",
+          "local": "Mit Tesla anmelden (Rücksprungadresse einfügen)"
         }
       },
       "order": {
@@ -26,6 +27,19 @@
         "data": {
           "region": "Region der Entwickleranwendung"
         }
+      },
+      "local_callback": {
+        "data": {
+          "callback": "Vollständige Rücksprungadresse"
+        },
+        "title": "Bei Tesla anmelden",
+        "description": "Öffne **[die Tesla-Anmeldeseite]({tesla_login_url})** in einem neuen Tab am Computer. Öffne vor dem Anmelden die Entwicklertools (F12), wähle **Netzwerk** und aktiviere **Protokoll beibehalten**. Melde dich bei Tesla an. Wenn der Browser die Tesla-App öffnen will, brich den App-Start ab. Kopiere die vollständige tesla://auth/callback-Adresse aus der Konsole oder aus dem Location-Feld der letzten Weiterleitung und füge sie hier ein. Teile die Adresse nicht."
+      },
+      "fleet_credentials": {
+        "title": "Anmeldedaten auswählen",
+        "data": {
+          "implementation": "Anmeldedaten"
+        }
       }
     },
     "abort": {
@@ -44,6 +58,14 @@
       "order_missing": "Die verfolgte Bestellung fehlt in diesem Konto.",
       "offline_access_missing": "Tesla hat keine automatische Erneuerung erlaubt. Erlaube Offline-Zugriff.",
       "reauth_successful": "Tesla-Konto wieder verbunden."
+    },
+    "error": {
+      "local_login_expired": "Der Versuch ist abgelaufen. Öffne den aktualisierten Tesla-Link und beginne erneut.",
+      "auth_required": "Tesla hat den Code abgelehnt. Öffne den aktualisierten Link und melde dich erneut an.",
+      "connection_error": "Der Login konnte nicht abgeschlossen werden. Prüfe die Verbindung zu Tesla und nutze für einen neuen Versuch den aktualisierten Link.",
+      "access_denied": "Tesla hat die Verbindung abgelehnt.",
+      "rate_limited": "Tesla begrenzt Anmeldeversuche. Warte vor einem neuen Versuch.",
+      "invalid_callback": "Die Rücksprungadresse gehört nicht zu diesem Anmeldeversuch oder ist unvollständig."
     }
   },
   "options": {

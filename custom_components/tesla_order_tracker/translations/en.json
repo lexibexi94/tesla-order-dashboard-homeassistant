@@ -3,10 +3,11 @@
     "step": {
       "user": {
         "title": "Tesla Order Tracker",
-        "description": "Try an example order or connect a registered Tesla Fleet application.",
+        "description": "Sign in with Tesla or try an example order.",
         "menu_options": {
           "demo": "Try the demo",
-          "fleet": "Connect Tesla Fleet (experimental)"
+          "fleet": "Advanced: use your own Tesla developer app",
+          "local": "Sign in with Tesla (paste callback address)"
         }
       },
       "order": {
@@ -26,6 +27,19 @@
         "data": {
           "region": "Developer app region"
         }
+      },
+      "local_callback": {
+        "data": {
+          "callback": "Full callback address"
+        },
+        "title": "Sign in with Tesla",
+        "description": "Open **[the Tesla sign-in page]({tesla_login_url})** in a new tab on a desktop computer. Before signing in, open Developer Tools (F12), select **Network**, and enable **Preserve log**. Sign in with Tesla. If the browser asks to open a Tesla app, cancel opening the app. Copy the complete tesla://auth/callback address from the console or the last redirect Location field and paste it here. Keep the address private."
+      },
+      "fleet_credentials": {
+        "title": "Choose application credentials",
+        "data": {
+          "implementation": "Credentials"
+        }
       }
     },
     "abort": {
@@ -44,6 +58,14 @@
       "order_missing": "This account did not return the tracked order.",
       "offline_access_missing": "Tesla did not issue a refresh token. Grant offline access.",
       "reauth_successful": "Tesla account connected again."
+    },
+    "error": {
+      "local_login_expired": "This attempt expired. Open the updated Tesla link and sign in again.",
+      "auth_required": "Tesla rejected the code. Open the updated Tesla link and sign in again.",
+      "connection_error": "Sign-in could not finish. Check the Tesla connection and use the updated link to try again.",
+      "access_denied": "Tesla denied the connection.",
+      "rate_limited": "Tesla is limiting sign-in attempts. Wait before you try again.",
+      "invalid_callback": "This callback is incomplete or does not match this sign-in attempt."
     }
   },
   "options": {

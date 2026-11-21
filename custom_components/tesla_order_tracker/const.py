@@ -9,6 +9,7 @@ AUTHORIZE = "https://auth.tesla.com/oauth2/v3/authorize"
 TOKEN = "https://fleet-auth.prd.vn.cloud.tesla.com/oauth2/v3/token"
 NORTH_AMERICA = "https://fleet-api.prd.na.vn.cloud.tesla.com"
 EUROPE = "https://fleet-api.prd.eu.vn.cloud.tesla.com"
+OWNER_HOST = "https://owner-api.teslamotors.com"
 REGIONS = {"eu": EUROPE, "na": NORTH_AMERICA}
 LOGGER = logging.getLogger(__package__)
 FIELDS = {

@@ -5,10 +5,14 @@ import probatio
 from homeassistant.config_entries import SOURCE_REAUTH, OptionsFlow
 from homeassistant.core import callback
 from homeassistant.helpers import config_entry_oauth2_flow
-from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectOptionDict
+from homeassistant.helpers.selector import (
+    SelectOptionDict, SelectSelector, SelectSelectorConfig,
+    TextSelector, TextSelectorConfig, TextSelectorType,
+)
 
 from .api import FleetError, order_reference, orders, project
-from .const import DOMAIN, LOGGER, REGIONS
+from .const import DOMAIN, LOGGER, OWNER_HOST, REGIONS
+from .local_auth import LOCAL_IMPLEMENTATION, LocalAuth, LocalLogin
 
 
 class ConfigFlow(config_entry_oauth2_flow.AbstractOAuth2FlowHandler, domain=DOMAIN):
@@ -22,8 +26,46 @@ class ConfigFlow(config_entry_oauth2_flow.AbstractOAuth2FlowHandler, domain=DOMA
 
     async def async_step_user(self, user_input=None):
         if user_input is None:
-            return self.async_show_menu(step_id="user", menu_options=["demo", "fleet"])
+            return self.async_show_menu(step_id="user", menu_options=["local", "demo", "fleet"])
         return await self.async_step_fleet()
+
+    async def async_step_local(self, user_input=None):
+        self._local_login = LocalLogin()
+        return self._local_form()
+
+    def _local_form(self, error=None):
+        return self.async_show_form(
+            step_id="local_callback",
+            description_placeholders={"tesla_login_url": self._local_login.url()},
+            data_schema=probatio.Schema({
+                probatio.Required("callback"): TextSelector(
+                    TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                ),
+            }),
+            errors={"base": error} if error else None,
+        )
+
+    async def async_step_local_callback(self, user_input=None):
+        if user_input is None:
+            return self._local_form()
+        attempt = self._local_login
+        try:
+            code = attempt.code(user_input["callback"])
+        except FleetError as err:
+            if err.kind == "local_login_expired":
+                self._local_login = LocalLogin()
+            return self._local_form(err.kind)
+
+        # A valid callback is single-use even if Tesla or the order read fails.
+        self._local_login = LocalLogin()
+        try:
+            token = await LocalAuth(self.hass).exchange(attempt, code)
+        except FleetError as err:
+            return self._local_form(err.kind)
+        self._host = OWNER_HOST
+        return await self.async_oauth_create_entry({
+            "auth_implementation": LOCAL_IMPLEMENTATION, "token": token,
+        })
 
     async def async_step_demo(self, user_input=None):
         await self.async_set_unique_id("demo")
@@ -33,7 +75,7 @@ class ConfigFlow(config_entry_oauth2_flow.AbstractOAuth2FlowHandler, domain=DOMA
     async def async_step_fleet(self, user_input=None):
         if user_input is not None:
             self._host = REGIONS[user_input["region"]]
-            return await self.async_step_pick_implementation()
+            return await self.async_step_fleet_credentials()
         return self.async_show_form(
             step_id="fleet",
             data_schema=probatio.Schema({
@@ -46,13 +88,35 @@ class ConfigFlow(config_entry_oauth2_flow.AbstractOAuth2FlowHandler, domain=DOMA
             }),
         )
 
+    async def async_step_fleet_credentials(self, user_input=None):
+        implementations = await config_entry_oauth2_flow.async_get_implementations(self.hass, DOMAIN)
+        choices = {key: item for key, item in implementations.items() if key != LOCAL_IMPLEMENTATION}
+        if not choices:
+            return self.async_abort(reason="missing_credentials")
+        if user_input is not None and user_input["implementation"] in choices:
+            self.flow_impl = choices[user_input["implementation"]]
+            return await self.async_step_auth()
+        if len(choices) == 1:
+            self.flow_impl = next(iter(choices.values()))
+            return await self.async_step_auth()
+        return self.async_show_form(
+            step_id="fleet_credentials",
+            data_schema=probatio.Schema({
+                probatio.Required("implementation"): probatio.In({
+                    key: item.name for key, item in choices.items()
+                }),
+            }),
+        )
+
     async def async_generate_authorize_url(self):
         self.flow_impl.audience = self._host
         return await super().async_generate_authorize_url()
 
     async def async_step_reauth(self, entry_data):
+        if entry_data["auth_implementation"] == LOCAL_IMPLEMENTATION:
+            return await self.async_step_local()
         self._host = entry_data["host"]
-        return await self.async_step_pick_implementation(
+        return await self.async_step_fleet_credentials(
             {"implementation": entry_data["auth_implementation"]}
         )
 
