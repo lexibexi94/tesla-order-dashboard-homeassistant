@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Tesla Order Tracker",
+        "description": "Try an example order or connect a registered Tesla Fleet application.",
+        "menu_options": {
+          "demo": "Try the demo",
+          "fleet": "Connect Tesla Fleet (experimental)"
+        }
+      },
+      "order": {
+        "title": "Choose an order",
+        "data": {
+          "reference": "Order"
+        }
+      },
+      "pick_implementation": {
+        "title": "Choose application credentials",
+        "data": {
+          "implementation": "Credentials"
+        }
+      },
+      "fleet": {
+        "title": "Select Tesla region",
+        "data": {
+          "region": "Developer app region"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This order or demo is already tracked.",
+      "oauth_error": "Tesla sign-in failed.",
+      "oauth_timeout": "Tesla sign-in timed out.",
+      "oauth_unauthorized": "Tesla rejected authorization.",
+      "missing_credentials": "Add credentials for a registered Tesla Fleet application.",
+      "connection_error": "Could not connect to the Tesla Fleet API.",
+      "api_error": "Tesla could not complete the request.",
+      "auth_required": "Tesla rejected this session.",
+      "access_denied": "Tesla denied access. Check app registration and granted access.",
+      "rate_limited": "Tesla asked the tracker to wait. Try again later.",
+      "invalid_response": "Tesla returned an unsupported order response.",
+      "no_orders": "Tesla reported no active orders.",
+      "order_missing": "This account did not return the tracked order.",
+      "offline_access_missing": "Tesla did not issue a refresh token. Grant offline access.",
+      "reauth_successful": "Tesla account connected again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Push notifications",
+        "description": "Select a phone already registered with the Home Assistant Companion App. The demo sends labeled messages only when enabled here.",
+        "data": {
+          "notify_service": "Companion App device"
+        }
+      }
+    }
+  }
+}

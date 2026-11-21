@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Tesla Order Tracker",
+        "description": "Probiere eine Beispielbestellung aus oder verbinde eine registrierte Tesla-Fleet-Anwendung.",
+        "menu_options": {
+          "demo": "Demo ausprobieren",
+          "fleet": "Tesla Fleet verbinden (experimentell)"
+        }
+      },
+      "order": {
+        "title": "Bestellung auswählen",
+        "data": {
+          "reference": "Bestellung"
+        }
+      },
+      "pick_implementation": {
+        "title": "Anmeldedaten auswählen",
+        "data": {
+          "implementation": "Anmeldedaten"
+        }
+      },
+      "fleet": {
+        "title": "Tesla-Region auswählen",
+        "data": {
+          "region": "Region der Entwickleranwendung"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Diese Bestellung oder Demo wird bereits verfolgt.",
+      "oauth_error": "Die Tesla-Anmeldung ist fehlgeschlagen.",
+      "oauth_timeout": "Die Tesla-Anmeldung hat zu lange gedauert.",
+      "oauth_unauthorized": "Tesla hat die Anmeldung abgelehnt.",
+      "missing_credentials": "Hinterlege die Anmeldedaten einer registrierten Tesla-Fleet-Anwendung.",
+      "connection_error": "Die Tesla Fleet API ist nicht erreichbar.",
+      "api_error": "Tesla konnte die Anfrage nicht bearbeiten.",
+      "auth_required": "Tesla hat diese Sitzung abgelehnt.",
+      "access_denied": "Tesla hat den Zugriff verweigert. Prüfe die Registrierung und Freigabe.",
+      "rate_limited": "Tesla hat eine Wartezeit vorgegeben. Versuche es später erneut.",
+      "invalid_response": "Tesla hat ein nicht unterstütztes Format geliefert.",
+      "no_orders": "Tesla meldet keine aktiven Bestellungen.",
+      "order_missing": "Die verfolgte Bestellung fehlt in diesem Konto.",
+      "offline_access_missing": "Tesla hat keine automatische Erneuerung erlaubt. Erlaube Offline-Zugriff.",
+      "reauth_successful": "Tesla-Konto wieder verbunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Push-Benachrichtigungen",
+        "description": "Wähle ein Handy, das bereits mit der Home Assistant Companion App verbunden ist. Demo-Meldungen werden nur nach dieser Auswahl gesendet und erscheinen als Demo.",
+        "data": {
+          "notify_service": "Companion-App-Gerät"
+        }
+      }
+    }
+  }
+}
